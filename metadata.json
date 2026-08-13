@@ -1,0 +1,6 @@
+{
+  "name": "YouTube Clip Cutter",
+  "description": "YouTube動画からショートカットキーで効率的にクリップを切り取り、1本の動画のように連続再生・エクスポートできるシンプルな編集ツール",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
