@@ -562,14 +562,14 @@ export default function App() {
                 placeholder="YouTubeのURLを入力..."
                 value={newUrl}
                 onChange={(e) => setNewUrl(e.target.value)}
-                className="w-full text-xs bg-[#1A1A1A] border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 text-white transition-colors"
+                className="w-full text-base sm:text-xs bg-[#1A1A1A] border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 text-white transition-colors"
               />
               <input
                 type="text"
                 placeholder="プロジェクト名 (任意)..."
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
-                className="w-full text-xs bg-[#1A1A1A] border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 text-white transition-colors"
+                className="w-full text-base sm:text-xs bg-[#1A1A1A] border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 text-white transition-colors"
               />
               <button
                 onClick={() => handleCreateProject()}
