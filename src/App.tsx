@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { YouTubePlayer, YouTubePlayerRef, extractYoutubeId } from "./components/YouTubePlayer";
 import { ClipList, formatTime } from "./components/ClipList";
 import { ShortcutGuide } from "./components/ShortcutGuide";
+import { useIsTouchDevice } from "./hooks/useIsTouchDevice";
 import { VideoProject, Clip } from "./types";
 import {
   Plus,
@@ -36,6 +37,7 @@ const PRESET_VIDEOS = [
 ];
 
 export default function App() {
+  const isTouchDevice = useIsTouchDevice();
   const [projects, setProjects] = useState<VideoProject[]>([]);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   
@@ -1024,7 +1026,9 @@ export default function App() {
                   <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block">💡 操作方法＆ヒント</span>
                   <p className="text-xs text-gray-400 leading-relaxed">
                     タイムライン上の<span className="text-indigo-400 font-bold">インディゴ色の帯</span>は、すでにストックされたクリップの範囲を表しています。
-                    スペースキーを1回押してマークし、そのまま流して、もう1回スペースキーを押すだけで自動的にクリップが追加されます。
+                    {isTouchDevice
+                      ? "「キリトリ開始地点をマーク」をタップし、そのまま流して、もう一度「確定・ストックに保存」をタップするだけで自動的にクリップが追加されます。"
+                      : "スペースキーを1回押してマークし、そのまま流して、もう1回スペースキーを押すだけで自動的にクリップが追加されます。"}
                   </p>
                 </div>
               </div>
