@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Clip } from "../types";
-import { Play, Trash2, ChevronUp, ChevronDown, Download, Copy, Check, Sparkles, Film, Edit2, Terminal, FileCode, X, HelpCircle, ArrowRight } from "lucide-react";
+import { Play, Trash2, ChevronUp, ChevronDown, Download, Copy, Check, Sparkles, Film, Edit2, Terminal, FileCode, X, HelpCircle, ArrowRight, Monitor } from "lucide-react";
+import { useIsTouchDevice } from "../hooks/useIsTouchDevice";
 
 interface ClipListProps {
   clips: Clip[];
@@ -47,6 +48,7 @@ export function ClipList({
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const isTouchDevice = useIsTouchDevice();
 
   const moveClip = (index: number, direction: "up" | "down") => {
     const newIndex = direction === "up" ? index - 1 : index + 1;
@@ -347,8 +349,14 @@ pause
             </div>
             <p className="text-sm font-medium text-gray-400">ストックされたクリップはありません</p>
             <p className="text-xs text-gray-600 mt-1.5 max-w-[280px]">
-              動画を再生しながら<kbd className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300 font-mono mx-1">Space</kbd>キーを押して
-              お気に入りの場面を切り取りましょう！
+              {isTouchDevice ? (
+                "動画を再生しながら「キリトリ開始地点をマーク」をタップしてお気に入りの場面を切り取りましょう！"
+              ) : (
+                <>
+                  動画を再生しながら<kbd className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300 font-mono mx-1">Space</kbd>キーを押して
+                  お気に入りの場面を切り取りましょう！
+                </>
+              )}
             </p>
           </div>
         ) : (
@@ -398,7 +406,7 @@ pause
                           onBlur={() => setEditingClipId(null)}
                           onKeyDown={(e) => e.key === "Enter" && setEditingClipId(null)}
                           autoFocus
-                          className="text-xs bg-[#1A1A1A] text-white border border-white/10 rounded px-1.5 py-0.5 outline-none focus:border-indigo-500 w-full"
+                          className="text-base sm:text-xs bg-[#1A1A1A] text-white border border-white/10 rounded px-1.5 py-0.5 outline-none focus:border-indigo-500 w-full"
                         />
                       ) : (
                         <span
@@ -426,7 +434,7 @@ pause
                       placeholder="タグやメモを追加 (例: ゴール, シュート...)"
                       value={clip.note || ""}
                       onChange={(e) => onUpdateClipNote(clip.id, e.target.value)}
-                      className="text-[11px] text-gray-300 placeholder-gray-600 bg-transparent border-b border-transparent hover:border-white/10 focus:border-white/20 focus:bg-white/5 w-full py-0.5 outline-none rounded"
+                      className="text-base sm:text-[11px] text-gray-300 placeholder-gray-600 bg-transparent border-b border-transparent hover:border-white/10 focus:border-white/20 focus:bg-white/5 w-full py-0.5 outline-none rounded"
                     />
                   </div>
                 </div>
@@ -486,6 +494,12 @@ pause
             <Download className="w-4 h-4" />
             1本の動画(MP4)としてエクスポート
           </button>
+          {isTouchDevice && (
+            <p className="text-[10px] text-gray-500 flex items-center justify-center gap-1 -mt-1">
+              <Monitor className="w-3 h-3 shrink-0" />
+              MP4への結合処理はPC(ffmpeg実行環境)が必要です
+            </p>
+          )}
 
           {/* FFmpeg 結合コマンドセクション */}
           <div className="bg-[#1A1A1A] rounded-lg border border-white/10 p-3">
